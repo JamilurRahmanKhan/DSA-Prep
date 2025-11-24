@@ -60,3 +60,34 @@ int main() {
 }
 
 // ? Optimal
+vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
+    int n = grid.size();
+    long long N = 1LL * n * n;  // total numbers from 1 to n^2
+
+    long long sumActual = 0;     // sum of all values in grid
+    long long sumSqActual = 0;   // sum of squares of all values in grid
+
+    // Compute actual sum and sum of squares
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            long long val = grid[i][j];
+            sumActual += val;
+            sumSqActual += val * val;
+        }
+    }
+
+    // Expected sum and sum of squares for 1..N
+    long long sumExpected = N * (N + 1) / 2;
+    long long sumSqExpected = N * (N + 1) * (2 * N + 1) / 6;
+
+    // diff1 = a - b, diff2 = a^2 - b^2 = (a - b)(a + b)
+    long long diff1 = sumActual - sumExpected;
+    long long diff2 = sumSqActual - sumSqExpected;
+
+    long long sumAB = diff2 / diff1;  // a + b
+
+    long long a = (diff1 + sumAB) / 2;  // repeated
+    long long b = a - diff1;            // missing
+
+    return { (int)a, (int)b };
+}
