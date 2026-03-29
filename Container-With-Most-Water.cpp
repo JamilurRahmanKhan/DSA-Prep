@@ -9,13 +9,12 @@ class Solution
 public:
     int maxArea(vector<int> &heights)
     {
-        int l = 0, r = heights.size() - 1;
+        int l = 0, r = heights.size()-1;
         int res = 0;
 
-        while (l < r)
-        {
+        while(l<r){
             int h = heights[l] < heights[r] ? heights[l++] : heights[r--];
-            res = max(res, h * (r - l + 1));
+            res = max(res, h*(r-l+1));
         }
         return res;
     }
