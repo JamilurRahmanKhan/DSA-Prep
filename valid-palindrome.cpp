@@ -4,22 +4,30 @@ using namespace std;
 class Solution
 {
 public:
-    bool isPalindrome(string s)
-    {
-        int i = 0, j = s.size() - 1;
-        while (i < j)
-        {
-            while (i < j && !isalnum(s[i])) i++;
-            while (i < j && !isalnum(s[j])) j--;
+    bool isPalindrome(string s){
+        int l = 0;
+        int r = s.length();
+        while(l<r){
+            while(l<r && !alphaNum(s[l])){
+                l++;
+            }
+            while(l<r && !alphaNum(s[r])){
+                r--;
+            }
 
-            if (tolower(s[i]) != tolower(s[j]))
-            {
+            if(tolower(s[l]) != tolower(s[r])){
                 return false;
             }
-            i++;
-            j--;
+            l++;
+            r--;
         }
         return true;
+    }
+
+    bool alphaNum(char c){
+        return (c>= 'A' && c <= 'Z' ||
+                c>= 'a' && c <= 'z' ||
+                c>= '0' && c <= '9');
     }
 };
 
