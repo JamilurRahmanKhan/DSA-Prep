@@ -81,6 +81,47 @@
 
 
 
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+using namespace std;
+
+class Solution
+{
+public:
+    int lengthOfLongestSubstring(string s)
+    {
+        unordered_map<char,int> mp;
+        int l = 0;
+        int res = 0;
+
+        for(int r=0; r<s.size(); r++){
+            if(mp.find(s[r]) != mp.end()){
+                l = max(mp[s[r]]+1, l);
+            }
+            mp[s[r]] = r;
+            res = max(res,r-l+1);
+        }
+        return res;
+    }
+};
+
+int main()
+{
+    Solution sol;
+    // vector<string> s = {"aabjexabjebbxio"};
+    // vector<string> s = {"aabjexbjexio"};
+    vector<string> s = {"zxyzyxz"};
+    int result = sol.lengthOfLongestSubstring(s[0]);
+    cout << "The output is: " << result << endl;
+    return 0;
+}
+
+
+
+
+
 // #include <iostream>
 // #include <vector>
 // #include <string>
@@ -92,15 +133,17 @@
 // public:
 //     int lengthOfLongestSubstring(string s)
 //     {
-//         unordered_map<char,int> A;
-//         int l=0;
-//         int maxLen=0;
-//         for(int r=0; r<s.size(); r++){
-//             if(A.find(s[r]) != A.end()){
-//                 l = max(A[s[r]]+1, l);
+//         vector<int> last(256, -1); 
+//         int l = 0, maxLen = 0;
+
+//         for (int r = 0; r < s.size(); r++)
+//         {
+//             if (last[s[r]] >= l)
+//             { 
+//                 l = last[s[r]] + 1;
 //             }
-//             A[s[r]] = r;
-//             maxLen = max(maxLen, r-l+1);
+//             last[s[r]] = r;
+//             maxLen = max(maxLen, r - l + 1);
 //         }
 //         return maxLen;
 //     }
@@ -116,45 +159,3 @@
 //     cout << "The output is: " << result << endl;
 //     return 0;
 // }
-
-
-
-
-
-#include <iostream>
-#include <vector>
-#include <string>
-#include <unordered_map>
-using namespace std;
-
-class Solution
-{
-public:
-    int lengthOfLongestSubstring(string s)
-    {
-        vector<int> last(256, -1); 
-        int l = 0, maxLen = 0;
-
-        for (int r = 0; r < s.size(); r++)
-        {
-            if (last[s[r]] >= l)
-            { 
-                l = last[s[r]] + 1;
-            }
-            last[s[r]] = r;
-            maxLen = max(maxLen, r - l + 1);
-        }
-        return maxLen;
-    }
-};
-
-int main()
-{
-    Solution sol;
-    // vector<string> s = {"aabjexabjebbxio"};
-    // vector<string> s = {"aabjexbjexio"};
-    vector<string> s = {"zxyzyxz"};
-    int result = sol.lengthOfLongestSubstring(s[0]);
-    cout << "The output is: " << result << endl;
-    return 0;
-}
